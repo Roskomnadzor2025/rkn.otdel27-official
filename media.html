@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>СМИ — Отдел №27 Роскомнадзора</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    html, body { width: 100%; min-height: 100%; }
+    body { font-family: 'PT Sans', Arial, sans-serif; background: #f6f9fc; color: #222; margin: 0; }
+    header { background: #0c3776; color: #fff; width: 100%; }
+    .rkn-header-row {
+      max-width: 1280px; margin: 0 auto; display: flex; align-items: center;
+      gap: 20px; padding: 14px 12px 0;
+    }
+    .rkn-logo { height: 54px; max-width: 100px; width: auto; }
+    .rkn-title { font-size: 15px; font-weight: 600; line-height: 1.22; }
+    nav { background: #0c3776; width: 100%; }
+    .main-menu {
+      max-width: 1280px; margin: 0 auto; display: flex; gap: 18px;
+      padding: 0 8px 0 92px; overflow-x: auto; scrollbar-width: none;
+    }
+    .main-menu::-webkit-scrollbar { display: none; }
+    .main-menu a {
+      color: #fff; text-decoration: none; font-weight: 600;
+      padding: 15px 0 7px; border-bottom: 2px solid transparent; transition: border .2s;
+      flex-shrink: 0; white-space: nowrap; font-size: 15px;
+    }
+    .main-menu a:hover, .main-menu .active { border-bottom: 2px solid #9bd540; }
+
+    h1.section-title {
+      margin: 36px 0 10px 0; color: #0c3776; text-align: center; font-size: 1.45rem; font-weight: 700;
+    }
+    .section-sub {
+      font-size: 1.02rem; color: #234781; text-align: center; margin-bottom: 20px;
+    }
+    .section-block {
+      background: #fff; max-width: 900px; margin: 0 auto 30px; border-radius: 14px;
+      box-shadow: 0 2px 14px #001a3640; padding: 19px 6vw 21px;
+      font-size: 1.01rem;
+    }
+    ul.checklist { margin: 13px 0 0 17px; color: #222; font-size: 1.01rem;}
+    ul.checklist li { margin-bottom: 7px; }
+    .note {
+      background: #e7f3ff; color: #195aa3; padding: 10px 13px; border-radius: 7px;
+      margin-top: 16px; font-size: 0.98rem;
+    }
+    .law-block {
+      margin-top: 18px; background: #f2f6ff; border-radius: 7px; padding: 11px 9px; font-size: 0.98rem;
+    }
+    .law-block b { color: #0c3776; }
+    .table-block { margin: 14px 0 13px 0; overflow-x: auto; }
+    table {
+      width: 100%; border-collapse: collapse; background: #f9fbff; min-width: 540px;
+      font-size: 0.98rem;
+    }
+    th, td { border: 1px solid #d3e0f3; padding: 5px 9px; text-align: left; }
+    th { background: #e7f3ff; font-weight: 600; }
+    .faq-block { margin-top: 18px; }
+    .faq-block h3 { margin-bottom: 7px; color: #1755a1; font-size: 1.06rem; }
+    .faq { margin-bottom: 10px; }
+    .faq strong { color: #234781; }
+    .contact-ref { color: #1551b8; text-decoration: underline; }
+    .contact-ref:hover { color: #0051e8; }
+    .external-link { color: #195aa3; }
+    footer {
+      margin-top: 26px; background: #0c3776; color: #fff; text-align: center;
+      padding: 16px 0 10px; font-size: 13px;
+    }
+    .footer-links { margin: 8px 0 5px 0; }
+    .footer-links a { color: #b2d84e; margin: 0 7px; text-decoration: underline; }
+    .footer-links a:hover { color: #fff; }
+
+    /* --------- МЕДИА --------- */
+    @media (min-width: 550px) {
+      .section-block { padding: 18px 5vw 22px; font-size: 1.04rem; }
+      table { font-size: 1.04rem; }
+      h1.section-title { font-size: 2.2rem;}
+    }
+    @media (min-width: 900px) {
+      .section-block { padding: 36px 32px 32px; }
+    }
+    @media (max-width: 900px) {
+      .rkn-header-row, .main-menu { padding-left: 6px; padding-right: 6px;}
+      .main-menu { padding-left: 0;}
+      h1.section-title { font-size: 1.17rem;}
+    }
+    @media (max-width: 550px) {
+      .section-block { padding: 8px 2vw 12px;}
+      .rkn-header-row { flex-direction: column; gap: 9px; padding: 8px 4vw 0;}
+      .main-menu { font-size: 12px; gap: 9px; padding-left: 0;}
+      .rkn-title { font-size: 11px;}
+      h1.section-title { font-size: 1rem;}
+      .section-sub { font-size: 0.97rem;}
+      .note, .law-block { font-size: 0.93rem;}
+      th, td { padding: 4px 6px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="rkn-header-row">
+    <img src="images/rkn-logo.png" alt="Герб" class="rkn-logo">
+    <div class="rkn-title">
+      ОТДЕЛ №27 ФЕДЕРАЛЬНОЙ СЛУЖБЫ ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
+    </div>
+  </div>
+  <nav>
+    <div class="main-menu">
+      <a href="index.html">Главная</a>
+      <a href="personal.html">Персональные данные</a>
+      <a href="communication.html">Связь</a>
+      <a href="media.html" class="active">СМИ</a>
+      <a href="advertising.html">Интернет-реклама</a>
+      <a href="employees.html">Сотрудники</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <h1 class="section-title">СМИ</h1>
+  <div class="section-sub">Контроль СМИ, регистрация, предотвращение распространения ложной информации, поддержка честной журналистики</div>
+  <section class="section-block">
+    <h2 style="margin-top:0;">Задачи отдела №27 в работе со СМИ</h2>
+    <ul class="checklist">
+      <li><b>Ведение реестра зарегистрированных СМИ</b> — поддержание актуальной базы федеральных, региональных, зарубежных печатных и электронных изданий.</li>
+      <li><b>Контроль соответствия публикаций действующему законодательству</b> — пресечение публикаций, нарушающих законы о персональных данных, экстремизме, распространении недостоверной информации.</li>
+      <li><b>Работа с жалобами граждан</b> — оперативное реагирование на обращения по вопросам фейковых новостей, клеветы, незаконной рекламы в СМИ.</li>
+      <li><b>Проведение экспертиз контента</b> — анализ подозрительных материалов, в том числе с использованием автоматизированных систем мониторинга.</li>
+      <li><b>Международное сотрудничество</b> — взаимодействие с иностранными СМИ и регуляторами для предотвращения трансграничных нарушений.</li>
+      <li><b>Публикация рекомендаций для редакций</b> — повышение стандартов журналистики, профилактика нарушений.</li>
+    </ul>
+
+    <div class="note">
+      <b>Важно!</b> Все СМИ обязаны соблюдать требования закона о массовой информации и нести ответственность за проверку публикуемых данных.<br>
+      <br>Регистрация СМИ осуществляется только после рассмотрения полного пакета документов и экспертизы устава.
+    </div>
+
+    <div class="law-block">
+      <b>Ключевые нормативные акты:</b>
+      <ul>
+        <li>Закон РФ №2124-1 «О средствах массовой информации»</li>
+        <li>ФЗ-149 «Об информации, информационных технологиях и о защите информации»</li>
+        <li>ФЗ-436 «О защите детей от информации, причиняющей вред их здоровью и развитию»</li>
+        <li>Методические рекомендации Роскомнадзора по маркировке информационной продукции</li>
+      </ul>
+    </div>
+
+    <div class="table-block">
+      <table>
+        <tr>
+          <th>Тип СМИ</th>
+          <th>Требования к регистрации</th>
+          <th>Примеры нарушений</th>
+        </tr>
+        <tr>
+          <td>Печатные (газеты, журналы)</td>
+          <td>Предоставление устава, сведений о редакции, учредителе, заявлении</td>
+          <td>Печать анонимных материалов, отсутствие выходных данных</td>
+        </tr>
+        <tr>
+          <td>Электронные (сайты, порталы)</td>
+          <td>Соблюдение политики обработки персональных данных, регистрация домена</td>
+          <td>Публикация персональных данных без согласия, фейки</td>
+        </tr>
+        <tr>
+          <td>ТВ и радио</td>
+          <td>Лицензия на вещание, соблюдение квот национального контента</td>
+          <td>Трансляция запрещённых материалов, пропаганда экстремизма</td>
+        </tr>
+        <tr>
+          <td>Зарубежные издания</td>
+          <td>Уведомление о деятельности на территории РФ, предоставление переводов документов</td>
+          <td>Распространение недостоверной информации о России</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="faq-block">
+      <h3>Часто задаваемые вопросы</h3>
+      <div class="faq">
+        <strong>Как зарегистрировать СМИ?</strong><br>
+        Подайте заявление через <a class="contact-ref" href="https://rkn.gov.ru/mass-communications/mass-media/registration/" target="_blank">электронную систему регистрации СМИ</a>, приложите копии устава и паспортные данные учредителя.
+      </div>
+      <div class="faq">
+        <strong>Что делать, если в СМИ опубликованы ложные сведения?</strong><br>
+        Обратитесь с жалобой через <a class="contact-ref" href="https://rkn.gov.ru/treatments/" target="_blank">форму на сайте Роскомнадзора</a>.<br>
+        Ваша жалоба будет рассмотрена в течение 10 рабочих дней.
+      </div>
+      <div class="faq">
+        <strong>Какая ответственность за публикацию фейков?</strong><br>
+        За публикацию заведомо ложных сведений предусмотрены штрафы, блокировка ресурса, а в отдельных случаях — уголовная ответственность (ст. 207.1, 207.3 УК РФ).
+      </div>
+      <div class="faq">
+        <strong>Нужно ли регистрировать телеграм-канал?</strong><br>
+        Нет, регистрация обязательна только для СМИ в юридическом смысле, однако крупные Telegram-каналы могут быть внесены в реестр распространителей информации.
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:18px;">
+      <b>Полезные ресурсы:</b>
+      <ul>
+        <li><a href="https://rkn.gov.ru/mass-communications/mass-media/registration/" target="_blank" class="contact-ref">Электронная регистрация СМИ</a></li>
+        <li><a href="https://rkn.gov.ru/mass-communications/mass-media/" target="_blank" class="contact-ref">Реестр зарегистрированных СМИ</a></li>
+        <li><a href="https://ркнфакт.рф/" target="_blank" class="contact-ref">Федеральный проект по противодействию фейкам</a></li>
+        <li><a href="https://rkn.gov.ru/treatments/" target="_blank" class="contact-ref">Форма жалобы в Роскомнадзор</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="footer-links">
+    <a href="#">Публичная декларация</a>
+    <a href="#">Поддержка сайта</a>
+    <a href="#">Карта сайта</a>
+  </div>
+  <div>© 2025 Отдел №27 Федеральной службы по надзору в сфере связи, информационных технологий и массовых коммуникаций</div>
+  <div>Контакты: hotline27@rkn.gov.ru</div>
+</footer>
+</body>
+</html>

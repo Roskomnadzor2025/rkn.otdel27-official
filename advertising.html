@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Интернет-реклама — Отдел №27 Роскомнадзора</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    html, body { width: 100%; min-height: 100%; }
+    body { font-family: 'PT Sans', Arial, sans-serif; background: #f6f9fc; color: #222; margin: 0; }
+    header { background: #0c3776; color: #fff; width: 100%; }
+    .rkn-header-row {
+      max-width: 1280px; margin: 0 auto; display: flex; align-items: center;
+      gap: 20px; padding: 14px 12px 0;
+    }
+    .rkn-logo { height: 54px; max-width: 100px; width: auto; }
+    .rkn-title { font-size: 15px; font-weight: 600; line-height: 1.22; }
+    nav { background: #0c3776; width: 100%; }
+    .main-menu {
+      max-width: 1280px; margin: 0 auto; display: flex; gap: 18px;
+      padding: 0 8px 0 92px; overflow-x: auto; scrollbar-width: none;
+    }
+    .main-menu::-webkit-scrollbar { display: none; }
+    .main-menu a {
+      color: #fff; text-decoration: none; font-weight: 600;
+      padding: 15px 0 7px; border-bottom: 2px solid transparent; transition: border .2s;
+      flex-shrink: 0; white-space: nowrap; font-size: 15px;
+    }
+    .main-menu a:hover, .main-menu .active { border-bottom: 2px solid #9bd540; }
+
+    h1.section-title {
+      margin: 36px 0 10px 0; color: #0c3776; text-align: center; font-size: 1.45rem; font-weight: 700;
+    }
+    .section-sub {
+      font-size: 1.02rem; color: #234781; text-align: center; margin-bottom: 20px;
+    }
+    .section-block {
+      background: #fff; max-width: 900px; margin: 0 auto 28px; border-radius: 14px;
+      box-shadow: 0 2px 14px #001a3640; padding: 19px 6vw 21px;
+      font-size: 1.01rem;
+    }
+    ul.checklist { margin: 13px 0 0 17px; color: #222; font-size: 1.01rem;}
+    ul.checklist li { margin-bottom: 7px; }
+    .note {
+      background: #e7f3ff; color: #195aa3; padding: 10px 13px; border-radius: 7px;
+      margin-top: 16px; font-size: 0.98rem;
+    }
+    .law-block {
+      margin-top: 18px; background: #f2f6ff; border-radius: 7px; padding: 11px 9px; font-size: 0.98rem;
+    }
+    .law-block b { color: #0c3776; }
+    .scheme-table { margin: 14px 0 13px 0; overflow-x: auto; }
+    table {
+      width: 100%; border-collapse: collapse; background: #f9fbff; min-width: 520px;
+      font-size: 0.98rem;
+    }
+    th, td { border: 1px solid #d3e0f3; padding: 5px 9px; text-align: left; }
+    th { background: #e7f3ff; font-weight: 600; }
+    .faq-block { margin-top: 18px; }
+    .faq-block h3 { margin-bottom: 7px; color: #1755a1; font-size: 1.06rem; }
+    .faq { margin-bottom: 10px; }
+    .faq strong { color: #234781; }
+    .contact-ref { color: #1551b8; text-decoration: underline; }
+    .contact-ref:hover { color: #0051e8; }
+    .external-link { color: #195aa3; text-decoration: underline; }
+    .external-link:hover { color: #003366; }
+    .links-list { margin-top: 13px; }
+    .links-list li { margin-bottom: 5px; }
+    footer {
+      margin-top: 26px; background: #0c3776; color: #fff; text-align: center;
+      padding: 16px 0 10px; font-size: 13px;
+    }
+    .footer-links { margin: 8px 0 5px 0; }
+    .footer-links a { color: #b2d84e; margin: 0 7px; text-decoration: underline; }
+    .footer-links a:hover { color: #fff; }
+
+    /* --------- МЕДИА --------- */
+    @media (min-width: 550px) {
+      .section-block { padding: 18px 5vw 22px; font-size: 1.04rem; }
+      table { font-size: 1.04rem; }
+      h1.section-title { font-size: 2.2rem;}
+    }
+    @media (min-width: 900px) {
+      .section-block { padding: 36px 32px 32px; }
+    }
+    @media (max-width: 900px) {
+      .rkn-header-row, .main-menu { padding-left: 6px; padding-right: 6px;}
+      .main-menu { padding-left: 0;}
+      h1.section-title { font-size: 1.17rem;}
+    }
+    @media (max-width: 550px) {
+      .section-block { padding: 8px 2vw 12px;}
+      .rkn-header-row { flex-direction: column; gap: 9px; padding: 8px 4vw 0;}
+      .main-menu { font-size: 12px; gap: 9px; padding-left: 0;}
+      .rkn-title { font-size: 11px;}
+      h1.section-title { font-size: 1rem;}
+      .section-sub { font-size: 0.97rem;}
+      .note, .law-block { font-size: 0.93rem;}
+      th, td { padding: 4px 6px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="rkn-header-row">
+    <img src="images/rkn-logo.png" alt="Герб" class="rkn-logo">
+    <div class="rkn-title">
+      ОТДЕЛ №27 ФЕДЕРАЛЬНОЙ СЛУЖБЫ ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
+    </div>
+  </div>
+  <nav>
+    <div class="main-menu">
+      <a href="index.html">Главная</a>
+      <a href="personal.html">Персональные данные</a>
+      <a href="communication.html">Связь</a>
+      <a href="media.html">СМИ</a>
+      <a href="advertising.html" class="active">Интернет-реклама</a>
+      <a href="employees.html">Сотрудники</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <h1 class="section-title">Интернет-реклама</h1>
+  <div class="section-sub">
+    Контроль, учёт, прозрачность и защита рынка интернет-рекламы. 
+    <br>Всё о реестрах, нормативных актах, защите персональных данных и правилах для рекламодателей и площадок.
+  </div>
+  <section class="section-block">
+    <h2 style="margin-top:0;">Чем занимается отдел №27 по интернет-рекламе?</h2>
+    <ul class="checklist">
+      <li><b>Ведение единого реестра интернет-рекламы</b> — обязательный учёт всех размещаемых онлайн-объявлений на территории РФ.</li>
+      <li><b>Контроль прозрачности и достоверности рекламы</b> — предотвращение размещения запрещённой или мошеннической рекламы.</li>
+      <li><b>Сопровождение рекламных операторов и площадок</b> — консультирование, разъяснения, техподдержка по вопросам интеграции в государственные системы учёта.</li>
+      <li><b>Мониторинг и выявление нарушений</b> — проверка случаев скрытой рекламы, некорректной маркировки, рекламы мошеннических схем.</li>
+      <li><b>Взаимодействие с гражданами</b> — приём обращений о нарушениях, защита от навязчивой и небезопасной рекламы, помощь при спорных ситуациях.</li>
+      <li><b>Проведение профилактических работ</b> — консультации, рассылки рекомендаций для рекламодателей и агентств, публикация памяток по защите данных.</li>
+    </ul>
+
+    <div class="note">
+      <b>Важно!</b> Любая интернет-реклама, распространяемая на территории РФ, подлежит обязательному учёту в Едином реестре интернет-рекламы.
+      <br>За нарушение закона предусмотрены штрафы, блокировка ресурсов, административная ответственность.
+    </div>
+
+    <div class="law-block">
+      <b>Нормативная база:</b>
+      <ul>
+        <li>Федеральный закон №38-ФЗ «О рекламе» (ред. от 2024 г.)</li>
+        <li>Постановление Правительства РФ №1362 от 27.07.2023 — порядок учёта интернет-рекламы</li>
+        <li>ФЗ-152 «О персональных данных» — защита данных при обработке и передаче сведений о рекламных показах</li>
+        <li>Письма и разъяснения Роскомнадзора для рекламодателей</li>
+      </ul>
+    </div>
+
+    <div class="scheme-table">
+      <table>
+        <tr>
+          <th>Сторона</th>
+          <th>Что обязан делать?</th>
+          <th>Примеры нарушений</th>
+        </tr>
+        <tr>
+          <td>Рекламодатель</td>
+          <td>Вносить каждую кампанию в реестр, маркировать рекламу специальным ID</td>
+          <td>Неучтённая реклама, сокрытие сведений, подмена ID</td>
+        </tr>
+        <tr>
+          <td>Площадка/сайт</td>
+          <td>Подключиться к оператору рекламных данных (ОРД), передавать статистику показов</td>
+          <td>Показ неучтённой рекламы, игнорирование запросов от Роскомнадзора</td>
+        </tr>
+        <tr>
+          <td>Агентство/ОРД</td>
+          <td>Гарантировать точную передачу данных в реестр, хранить логи по запросу ведомства</td>
+          <td>Несвоевременная или неполная передача информации, ошибки в отчётности</td>
+        </tr>
+        <tr>
+          <td>Пользователь</td>
+          <td>Сообщать о подозрительной рекламе, опасных/фейковых объявлениях</td>
+          <td>—</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="faq-block">
+      <h3>Часто задаваемые вопросы</h3>
+      <div class="faq">
+        <strong>Где проверить, что реклама учтена?</strong><br>
+        Используйте <a class="contact-ref" href="https://pub.reestr.digital.gov.ru/" target="_blank">публичный реестр интернет-рекламы</a>. Введите ID рекламной кампании или ссылку.
+      </div>
+      <div class="faq">
+        <strong>Какая ответственность за неучтённую рекламу?</strong><br>
+        Для рекламодателей и сайтов — штрафы до 500 000 ₽, блокировка ресурса и внесение в реестр нарушителей.
+      </div>
+      <div class="faq">
+        <strong>Какой объём данных передаётся о рекламных кампаниях?</strong><br>
+        Минимум: ссылка, ID кампании, сведения о плательщике и ОРД, статистика показов. Персональные данные пользователей не передаются.
+      </div>
+      <div class="faq">
+        <strong>Могу ли я пожаловаться на рекламу мошенников?</strong><br>
+        Да, используйте <a class="contact-ref" href="https://rkn.gov.ru/treatments/" target="_blank">форму обращения Роскомнадзора</a> или горячую линию.
+      </div>
+      <div class="faq">
+        <strong>Какие виды рекламы не попадают под обязательный учёт?</strong><br>
+        Социальная реклама органов власти, сервисные уведомления банков, реклама на зарубежных сайтах без таргетинга на РФ (при отсутствии локального оператора).
+      </div>
+    </div>
+
+    <div class="note links-list">
+      <b>Полезные сервисы и ссылки:</b>
+      <ul>
+        <li><a href="https://pub.reestr.digital.gov.ru/" target="_blank" class="contact-ref">Публичный реестр интернет-рекламы</a></li>
+        <li><a href="https://digital.gov.ru/ru/activity/directions/1054/" target="_blank" class="contact-ref">Разъяснения по учёту интернет-рекламы</a></li>
+        <li><a href="https://rkn.gov.ru/treatments/" target="_blank" class="contact-ref">Жалоба на рекламу/мошенничество</a></li>
+        <li><a href="https://ркнфакт.рф/" target="_blank" class="contact-ref">Проект «РКН.ФАКТ» — борьба с фейковой рекламой</a></li>
+        <li><a href="https://www.consultant.ru/document/cons_doc_LAW_5892/" target="_blank" class="contact-ref">Текст закона «О рекламе»</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="footer-links">
+    <a href="#">Публичная декларация</a>
+    <a href="#">Поддержка сайта</a>
+    <a href="#">Карта сайта</a>
+  </div>
+  <div>© 2025 Отдел №27 Федеральной службы по надзору в сфере связи, информационных технологий и массовых коммуникаций</div>
+  <div>Контакты: hotline27@rkn.gov.ru</div>
+</footer>
+</body>
+</html>

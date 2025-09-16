@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Роскомнадзор — Учебный макет отдела №27 (анти‑мошенничество)</title>
+
+  <!-- Webfonts -->
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <style>
+    /* =============================================================
+       БАЗОВАЯ ТЕМА + ПЕРЕМЕННЫЕ
+       (сохраняем ваш визуальный язык, доводим до консистентности)
+    ============================================================= */
+    :root{
+      --bg:#F5F7FA;
+      --surface:#ffffff;
+      --ink:#212121;
+      --muted:#586174;
+      --brand:#003366;
+      --brand-2:#1a4d80;
+      --accent:#4C8BF5;
+      --ok:#2e7d32;
+      --warn:#c68400;
+      --danger:#b71c1c;
+
+      --radius:10px;
+      --shadow:0 2px 6px rgba(0,0,0,.06);
+      --shadow-lg:0 8px 24px rgba(0,0,0,.08);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'PT Sans', 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.55;
+    }
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+    a.link{color:var(--brand-2)}
+    .container{max-width:1200px; margin:0 auto; padding:0 16px}
+
+    /* =============================================================
+       ШАПКА + ГЛАВНАЯ НАВИГАЦИЯ
+    ============================================================= */
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:linear-gradient(90deg, var(--brand), var(--brand-2));
+      color:#fff;
+      box-shadow:var(--shadow);
+    }
+    header .topbar{display:flex; gap:16px; align-items:center; padding:14px 0}
+    .logo{height:40px; filter:drop-shadow(0 1px 0 rgba(0,0,0,.2))}
+    .title{
+      font-size:14px; line-height:1.25; letter-spacing:.2px; opacity:.95
+    }
+    .nav{margin-left:auto; display:flex; gap:20px; align-items:center}
+    .nav a{font-weight:600; opacity:.95}
+    .nav a:hover{opacity:1}
+    .nav .badge-mock{
+      font-size:12px; padding:4px 8px; border:1px solid rgba(255,255,255,.4);
+      border-radius:999px; opacity:.9
+    }
+    .nav-btn{display:none}
+
+    /* Offcanvas (мобайл) */
+    #mobileOverlay{position:fixed; inset:0; background:rgba(0,0,0,.45); opacity:0; pointer-events:none; transition:.25s}
+    #mobileOverlay.open{opacity:1; pointer-events:auto}
+    #mobileNav{position:fixed; top:0; left:-280px; width:280px; height:100vh; background:var(--brand);
+      color:#fff; padding:80px 16px; transition:left .25s; z-index:1100}
+    #mobileNav.open{left:0}
+    #mobileNav a{display:block; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.15)}
+
+    /* =============================================================
+       HERO + КРОШКИ + МЕТКИ
+    ============================================================= */
+    .hero{color:#fff; background:linear-gradient(135deg, var(--brand), var(--brand-2)); padding:40px 0}
+    .hero h1{margin:0; font-size:32px}
+    .hero p{opacity:.95; margin:8px 0 0}
+    .hero .labels{margin-top:14px; display:flex; gap:8px; flex-wrap:wrap}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.25); border-radius:999px; font-size:12px}
+
+    /* =============================================================
+       СЕКЦИОННЫЙ КАРКАС
+    ============================================================= */
+    section.block{background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin:28px 0}
+    h2.section-title{font-size:24px; color:var(--brand); margin:0 0 14px}
+    .muted{color:var(--muted)}
+    .grid{display:grid; gap:20px}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+
+    /* =============================================================
+       КОМПОНЕНТЫ
+    ============================================================= */
+    .card{background:#fff; border:1px solid #e9eef5; border-radius:var(--radius); box-shadow:var(--shadow); padding:16px}
+    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background:#eef3ff; border:1px solid #d9e3ff; padding:2px 6px; border-radius:6px}
+
+    /* Скелетоны */
+    .skeleton{position:relative; overflow:hidden; background:#e9eef5; min-height:120px; border-radius:var(--radius)}
+    .skeleton::after{content:""; position:absolute; inset:0; background:linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
+      transform:translateX(-100%); animation:shimmer 1.4s infinite}
+    @keyframes shimmer{100%{transform:translateX(100%)}}
+
+    /* Таблички */
+    table{width:100%; border-collapse:collapse}
+    th,td{padding:10px 12px; border-bottom:1px solid #edf1f6; text-align:left}
+    th{font-size:13px; color:#33415a; background:#f7f9fc}
+    tr:hover td{background:#fbfdff}
+
+    /* Аккордеон */
+    details{border:1px solid #e7edf6; border-radius:8px; padding:12px; background:#fff}
+    details+details{margin-top:10px}
+    details[open]{box-shadow:var(--shadow)}
+    summary{cursor:pointer; font-weight:600; color:var(--brand)}
+
+    /* Модалка (generic) */
+    .modal{position:fixed; inset:0; background:rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .2s; z-index:1200}
+    .modal.open{opacity:1; pointer-events:auto}
+    .modal-card{background:#fff; width:min(720px, 92vw); max-height:90vh; border-radius:12px; box-shadow:var(--shadow-lg); display:flex; flex-direction:column}
+    .modal-head{display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #eef2f7; position:sticky; top:0; background:#fff; z-index:1}
+    .modal-body{padding:16px; overflow:auto}
+    .close{background:none; border:none; font-size:26px; cursor:pointer}
+
+    /* Плашка учебного макета */
+    .edu-badge{position:fixed; right:16px; bottom:16px; background:#fff; border:1px solid #e6ebf2; border-radius:12px; padding:10px 12px; box-shadow:var(--shadow); font-size:12px; color:#33415a; z-index:900}
+    .edu-badge small{display:block; color:#6b778c}
+
+    /* Подвал */
+    footer{background:var(--brand); color:#fff; margin-top:32px}
+    footer .container{padding:18px 16px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between}
+    footer a{opacity:.95}
+    footer a:hover{opacity:1}
+
+    /* Адаптив */
+    @media (max-width: 1024px){ .grid-3{grid-template-columns:repeat(2,1fr)} .grid-4{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width: 720px){ .grid-2,.grid-3,.grid-4{grid-template-columns:1fr} .nav{display:none} .nav-btn{display:block; margin-left:auto; font-size:24px; background:none; border:none; color:#fff; cursor:pointer} }
+  </style>
+</head>
+<body>
+  <!-- =============================================================
+       HEADER
+  ============================================================= -->
+  <header>
+    <div class="container topbar">
+      <img src="images/rkn-logo.png" alt="Логотип (учебный макет)" class="logo" />
+      <div class="title">
+        ФЕДЕРАЛЬНАЯ СЛУЖБА ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br />
+        ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
+      </div>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#about">О отделе</a>
+        <a href="#employees">Сотрудники</a>
+        <a href="#services">Сервисы</a>
+        <a href="#docs">Документы</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contacts">Контакты</a>
+        <span class="badge-mock" title="Демонстрационный учебный макет">Учебный макет</span>
+      </nav>
+      <button id="navBtn" class="nav-btn" aria-label="Открыть меню">☰</button>
+    </div>
+  </header>
+
+  <!-- Offcanvas (мобильная навигация) -->
+  <div id="mobileOverlay"></div>
+  <aside id="mobileNav" aria-label="Мобильное меню">
+    <a href="#about">О отделе</a>
+    <a href="#employees">Сотрудники</a>
+    <a href="#services">Сервисы</a>
+    <a href="#docs">Документы</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contacts">Контакты</a>
+    <div style="margin-top:12px; opacity:.8; font-size:12px">Учебный макет для курсовой, не является официальным ресурсом</div>
+  </aside>
+
+  <!-- =============================================================
+       HERO
+  ============================================================= -->
+  <section class="hero" data-aos="fade-up">
+    <div class="container">
+      <h1>Отдел №27 — противодействие телефонному и онлайн‑мошенничеству</h1>
+      <p>Страница отдела (учебный макет) для демонстрации структуры, контента и интерфейсных паттернов «официального» сайта.</p>
+      <div class="labels">
+        <span class="chip" title="Внутренний регламент">Регламент v1.4</span>
+        <span class="chip" title="Соглашения о взаимодействии">Соглашения с банками</span>
+        <span class="chip" title="Защита ПДн">ПДн • ISO/IEC 27001</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container" id="main">
+    <!-- =============================================================
+         ОТДЕЛ (Важное)
+    ============================================================= -->
+    <section id="about" class="block" data-aos="fade-up">
+      <h2 class="section-title">О отделе</h2>
+      <div class="grid grid-2">
+        <article class="card">
+          <h3>Миссия</h3>
+          <p class="muted">Предотвращать ущерб граждан и организаций от телефонного и банковского мошенничества.</p>
+          <ul>
+            <li>Мониторинг массовых обзвонов и выявление «социальной инженерии»;</li>
+            <li>Сопровождение безопасной пере‑идентификации после инцидентов;</li>
+            <li>Информационные кампании: как распознать фишинг и «звонок из банка»;</li>
+            <li>Методические рекомендации для операторов связи и финсектора.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Правовые основания</h3>
+          <p class="muted">Свод ориентиров для макета (не является юридической консультацией):</p>
+          <ul>
+            <li>ФЗ‑149 «Об информации» (аспекты противодействия злоупотреблениям в сетях связи);</li>
+            <li>ФЗ‑152 «О персональных данных» (минимизация данных, законность, безопасность);</li>
+            <li>ФЗ‑126 «О связи» (в т.ч. меры пресечения незаконных рассылок);</li>
+            <li>Рекомендации по кибербезопасности для финсектора (AML/CFT best‑practice).</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="grid grid-3" style="margin-top:12px">
+        <article class="card">
+          <h4>Ключевые функции</h4>
+          <ul>
+            <li>Аналитика инцидентов, взаимодействие с правоохранительными органами;</li>
+            <li>Методическая поддержка операторов/банков;</li>
+            <li>Обратная связь гражданам и просвещение.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>Инициативы‑2025</h4>
+          <ul>
+            <li>«Анти‑спам‑звонки»: сигнатуры и блок‑листы;</li>
+            <li>«Безопасный банкинг»: рекомендации по аномалиям переводов;</li>
+            <li>Портал памяток для граждан.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>Показатели</h4>
+          <table>
+            <tr><th>Метрика</th><th>Значение (Q3)</th></tr>
+            <tr><td>Звонков в анализе</td><td>57 230</td></tr>
+            <tr><td>Блокировки номеров</td><td>13 482</td></tr>
+            <tr><td>Информ‑рассылки</td><td>пилот 12 регионов</td></tr>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         СОТРУДНИКИ (поиск, фильтры, сортировка, пагинация)
+    ============================================================= -->
+    <section id="employees" class="block" data-aos="fade-up">
+      <h2 class="section-title">Сотрудники</h2>
+      <div class="card" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+        <input id="empSearch" type="search" placeholder="Поиск по ФИО / должности" aria-label="Поиск сотрудников" style="flex:1; padding:10px; border:1px solid #dfe6f1; border-radius:8px" />
+        <select id="empDept" aria-label="Фильтр по подразделению" style="padding:10px; border:1px solid #dfe6f1; border-radius:8px">
+          <option value="">Все подразделения</option>
+        </select>
+        <select id="empSort" aria-label="Сортировка" style="padding:10px; border:1px solid #dfe6f1; border-radius:8px">
+          <option value="name">По имени А→Я</option>
+          <option value="name_desc">По имени Я→А</option>
+          <option value="dept">По подразделению</option>
+        </select>
+      </div>
+
+      <div id="empGrid" class="grid grid-3" style="margin-top:16px"></div>
+
+      <div class="card" style="display:flex; align-items:center; justify-content:space-between; margin-top:12px">
+        <div id="empStat" class="muted">Показано 0 из 0</div>
+        <div style="display:flex; gap:8px">
+          <button class="kbd" id="prevPage" aria-label="Предыдущая страница">←</button>
+          <span id="pageLabel" class="muted">1 / 1</span>
+          <button class="kbd" id="nextPage" aria-label="Следующая страница">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         СЕРВИСЫ (безопасные демо‑ссылки)
+    ============================================================= -->
+    <section id="services" class="block" data-aos="fade-up">
+      <h2 class="section-title">Сервисы и памятки</h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Памятка: как распознать фишинг</h3>
+          <p class="muted">Короткая проверка 5 признаков перед ответом на звонок «из банка».</p>
+          <ul>
+            <li>Спешка и давление на принятие решения;</li>
+            <li>Запрос конфиденциальных данных;</li>
+            <li>Подмена номера/названия организации;</li>
+            <li>Перевод в «безопасные счета»;</li>
+            <li>Ссылки из SMS/мессенджеров.</li>
+          </ul>
+          <button class="kbd" onclick="openMemo('memoPhishing')">Открыть памятку</button>
+        </article>
+
+        <article class="card">
+          <h3>Проверка номера (демо)</h3>
+          <p class="muted">Учебная проверка формата и базовой «подозрительности» без доступа к реестрам.</p>
+          <div style="display:flex; gap:8px; margin-top:8px">
+            <input id="numCheck" placeholder="+7 900 000-00-00" style="flex:1; padding:10px; border:1px solid #e1e6ef; border-radius:8px" />
+            <button class="kbd" onclick="demoCheckNumber()">Проверить</button>
+          </div>
+          <div id="numResult" class="muted" style="margin-top:8px">Введите номер в международном формате.</div>
+        </article>
+
+        <article class="card">
+          <h3>Антивирус (демо‑APK)</h3>
+          <p class="muted">Для курсовой используется пустой файл‑заглушка. Никаких установок на реальное устройство не требуется.</p>
+          <a class="link" href="demo/Antifraud_demo.apk" download>Скачать демонстрационный APK</a>
+          <p class="muted" style="margin-top:6px">⚠️ Не является продуктом РКН. Для учебных целей.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         ДОКУМЕНТЫ (аккордеон + таблица)
+    ============================================================= -->
+    <section id="docs" class="block" data-aos="fade-up">
+      <h2 class="section-title">Документы</h2>
+      <div class="grid grid-2">
+        <div>
+          <details>
+            <summary>Устав отделения №27</summary>
+            <p class="muted">Учебный шаблон на основе типовой структуры документа.</p>
+            <a class="link" href="docs/Устав_Отдел27.pdf" target="_blank" rel="noopener">Открыть PDF</a>
+          </details>
+          <details>
+            <summary>Регламент работы</summary>
+            <p class="muted">Режим обработки обращений, схемы эскалации и взаимодействия.</p>
+            <a class="link" href="docs/Регламент_Работы.pdf" target="_blank" rel="noopener">Открыть PDF</a>
+          </details>
+          <details>
+            <summary>Положение о персональных данных</summary>
+            <p class="muted">Роли, политика хранения, минимизация, уведомления.</p>
+            <a class="link" href="docs/Положение_ПД.pdf" target="_blank" rel="noopener">Открыть PDF</a>
+          </details>
+        </div>
+        <div class="card">
+          <h3>Реестр публикаций (демо)</h3>
+          <table id="docsTable" aria-describedby="docsHelp">
+            <thead>
+              <tr><th>№</th><th>Название</th><th>Версия</th><th>Дата</th><th>Файл</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="docsHelp" class="muted" style="margin-top:6px">Сводная таблица для демонстрации сортировки/наполнения JS.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         FAQ (вопрос‑ответ)
+    ============================================================= -->
+    <section id="faq" class="block" data-aos="fade-up">
+      <h2 class="section-title">Частые вопросы</h2>
+      <details>
+        <summary>Это официальный сайт?</summary>
+        <p>Нет. Это <strong>учебный макет</strong> для курсовой работы. Он имитирует структуру и стиль «официального» сайта без использования реальных служебных данных, логотипов и сервисов.</p>
+      </details>
+      <details>
+        <summary>Можно ли оставлять персональные данные?</summary>
+        <p>Нет. Не вводите реальные ФИО, паспортные данные, номера карт, телефоны. Все формы и проверки — демонстрационные.</p>
+      </details>
+      <details>
+        <summary>Где код и как он устроен?</summary>
+        <p>Весь макет реализован в одном HTML‑файле с CSS/JS, чтобы удовлетворить требование по объёму кода и наглядности. Секции: «О отделе», «Сотрудники», «Сервисы», «Документы», «FAQ», «Контакты».</p>
+      </details>
+    </section>
+
+    <!-- =============================================================
+         КОНТАКТЫ + ФОРМА (демо)
+    ============================================================= -->
+    <section id="contacts" class="block" data-aos="fade-up">
+      <h2 class="section-title">Контакты</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Горячая линия (демо)</h3>
+          <p><strong>Телефон:</strong> +7 (495) 248‑27‑55</p>
+          <p><strong>E‑mail:</strong> hotline@example.gov</p>
+          <p class="muted">Приём граждан в очной форме не осуществляется. Каналы связи приведены в учебных целях.</p>
+        </div>
+        <form id="feedbackForm" class="card" onsubmit="return sendFeedback(event)">
+          <h3>Обратная связь</h3>
+          <label>Тема<br /><input name="topic" required placeholder="Кратко о сути" style="width:100%; padding:10px; border:1px solid #dfe6f1; border-radius:8px" /></label>
+          <div style="height:8px"></div>
+          <label>Сообщение<br /><textarea name="message" required rows="5" placeholder="Опишите ситуацию (без персональных данных)" style="width:100%; padding:10px; border:1px solid #dfe6f1; border-radius:8px; resize:vertical"></textarea></label>
+          <div style="height:8px"></div>
+          <button class="kbd" type="submit">Отправить (демо)</button>
+          <div id="feedbackResult" class="muted" style="margin-top:6px">Форма демонстрационная, данные никуда не отправляются.</div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- =============================================================
+       FOOTER
+  ============================================================= -->
+  <footer>
+    <div class="container">
+      <div>© 2025. Учебный макет сайта отдела №27. Не является официальным ресурсом.</div>
+      <div style="opacity:.9"><a class="link" href="#">Положение об учебном макете</a> • <a class="link" href="#faq">FAQ</a></div>
+    </div>
+  </footer>
+
+  <!-- Плашка учебного макета -->
+  <div class="edu-badge" role="note" aria-label="Учебный макет">
+    Учебный макет для курсовой работы
+    <small>Без реальных сервисов и персональных данных</small>
+  </div>
+
+  <!-- =============================================================
+       МОДАЛКИ ПАМЯТОК
+  ============================================================= -->
+  <div id="memoPhishing" class="modal" aria-hidden="true" role="dialog" aria-label="Памятка о фишинге">
+    <div class="modal-card">
+      <div class="modal-head">
+        <strong>Памятка: распознаём фишинг‑звонок</strong>
+        <button class="close" onclick="closeModal('memoPhishing')">×</button>
+      </div>
+      <div class="modal-body">
+        <ol>
+          <li><strong>Проверьте источник.</strong> Перезвоните по официальному номеру, найденному на сайте организации.</li>
+          <li><strong>Не сообщайте коды.</strong> СМС‑коды/пароли не требуются для «проверки безопасности».</li>
+          <li><strong>Не переходите по ссылкам из SMS/мессенджеров.</strong> Открывайте сайт вручную.</li>
+          <li><strong>Не торопитесь.</strong> Давление времени — любимый приём злоумышленников.</li>
+          <li><strong>Сомневаетесь?</strong> Завершите разговор и обратитесь в поддержку официально.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================================
+       DATA & SCRIPT
+  ============================================================= -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 600, once: true });
+
+    // =======================
+    // Offcanvas навигация
+    // =======================
+    const navBtn = document.getElementById('navBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    navBtn?.addEventListener('click', ()=>{ mobileNav.classList.add('open'); mobileOverlay.classList.add('open'); });
+    mobileOverlay?.addEventListener('click', ()=>{ mobileNav.classList.remove('open'); mobileOverlay.classList.remove('open'); });
+
+    // =======================
+    // Демо: проверка номера
+    // =======================
+    function demoCheckNumber(){
+      const el = document.getElementById('numCheck');
+      const out = document.getElementById('numResult');
+      const raw = (el.value||'').replace(/\D+/g,'');
+      if(!raw){ out.textContent = 'Введите номер, например +7 900 000-00-00.'; return; }
+      const looksRU = raw.startsWith('7') && raw.length===11;
+      const suspicious = /0000$/.test(raw) || /(1234|1111|2222)/.test(raw);
+      out.innerHTML = `Формат: ${looksRU? 'корректный RU' : 'некорректный/иной'} · Оценка риска: <b>${suspicious? 'повышенный' : 'низкий'}</b> (учебная эвристика)`;
+    }
+
+    // =======================
+    // Сотрудники — данные (ваши исходные + расширение полей)
+    // =======================
+    const EMPLOYEES = [
+      { id:1,  name:'Фролова Александра', position:'Ведущий специалист‑эксперт', dept:'Отдел экстренной цифровой поддержки', email:'frolova.alexsandra94@gov.ru', phone:'+7 (927) 071‑17‑72', birth:'15.04.1994', idNumber:'142‑217', tags:['аналитика','2FA'], photo:'images/1.jpg', idImg:'images/1_id.jpg' },
+      { id:2,  name:'Кузнецов Виктор', position:'Специалист по защите персональных данных', dept:'Защита граждан от цифрового мошенничества', email:'kuznetcov21victor@gov.ru', phone:'+7 (933) 025‑30‑59', birth:'22.09.1991', idNumber:'582‑749', tags:['ПДн','восстановление'], photo:'images/2.jpg', idImg:'images/2_id.jpg' },
+      { id:3,  name:'Попова Диана', position:'Специалист по кибербезопасности в соцсетях', dept:'Отдел персональной цифровой безопасности', email:'popova.diana28@gov.ru', phone:'+7 (995) 076‑70‑02', birth:'03.12.1995', idNumber:'192‑004', tags:['соцсети','шифрование'], photo:'images/3.jpg', idImg:'images/3_id.jpg' },
+      { id:4,  name:'Зотова Наталья', position:'Специалист экстренного реагирования', dept:'Отдел защиты от телефонного мошенничества', email:'zotovanatalya70rkn@gov.ru', phone:'+7 (951) 853‑79‑67', birth:'17.08.1994', idNumber:'453‑513', tags:['телефон','консультирование'], photo:'images/4.jpg', idImg:'images/4_id.jpg' },
+      { id:5,  name:'Панфилова Александра', position:'Специалист по противодействию звонкам', dept:'Отдел защиты от телефонного и онлайн‑мошенничества', email:'ponomareva95natalya.rkn@gov.ru', phone:'+7 (901) 623‑88‑92', birth:'27.02.1996', idNumber:'240‑325', tags:['аккаунты','ре‑идентификация'], photo:'images/5.jpg', idImg:'images/5_id.jpg' },
+      { id:6,  name:'Никифоров Николай', position:'Мониторинг мошеннических вызовов', dept:'Группа мониторинга активности в телеком‑среде', email:'nikiforov.nikolay93@gov.ru', phone:'+7 (916) 843‑32‑56', birth:'11.11.1993', idNumber:'245‑420', tags:['мониторинг','блок‑листы'], photo:'images/6.jpg', idImg:'images/6_id.jpg' },
+      { id:7,  name:'Стрельникова Анна', position:'Эксперт по телефонному мошенничеству', dept:'Отдел противодействия телефонному мошенничеству', email:'anna.nikolaevna10roscom@gov.ru', phone:'+7 (961) 153‑49‑56', birth:'07.11.1995', idNumber:'301‑018', tags:['операторы','приём обращений'], photo:'images/7.jpg', idImg:'images/7_id.jpg' },
+      { id:8,  name:'Трисова Юлия', position:'Специалист по надзору за ПДн', dept:'Департамент оперативного вмешательства', email:'strelnukova77anna@gov.ru', phone:'+7 (902) 741‑52‑46', birth:'30.05.1996', idNumber:'152‑517', tags:['ПДн','информработа'], photo:'images/8.jpg', idImg:'images/8_id.jpg' },
+      { id:10, name:'Ковалева Анна', position:'Специалист оперативного реагирования', dept:'Отдел защиты от телефонного и онлайн‑мошенничества', email:'anna10kivaleva@gov.ru', phone:'+7 (906) 033‑38‑80', birth:'07.12.1997', idNumber:'170‑427', tags:['реагирование','идентификация'], photo:'images/10.jpg', idImg:'images/10_id.jpg' }
+    ];
+
+    // Подразделения -> options
+    const deptSelect = document.getElementById('empDept');
+    const uniqDepts = [...new Set(EMPLOYEES.map(e=>e.dept))].sort();
+    uniqDepts.forEach(d=>{ const o=document.createElement('option'); o.value=d; o.textContent=d; deptSelect.appendChild(o); });
+
+    // Пагинация/рендер
+    const PAGE_SIZE = 6;
+    let page=1, filtered=[...EMPLOYEES];
+
+    function renderEmployees(){
+      const grid = document.getElementById('empGrid');
+      grid.innerHTML='';
+      const start = (page-1)*PAGE_SIZE;
+      const slice = filtered.slice(start, start+PAGE_SIZE);
+
+      if(!slice.length){ grid.innerHTML = '<div class="skeleton"></div>'; }
+
+      slice.forEach(e=>{
+        const card = document.createElement('article');
+        card.className='card';
+        card.innerHTML = `
+          <img src="${e.photo}" alt="${e.name}" style="width:100%; height:240px; object-fit:cover; border-radius:8px" />
+          <h3 style="margin:10px 0 6px">${e.name}</h3>
+          <div class="muted">${e.position}</div>
+          <div class="muted" style="margin-top:4px">${e.dept}</div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin:10px 0">${e.tags.map(t=>`<span class="chip" style="background:#f2f6ff; border:1px solid #dfe6ff; color:#1a3a7a">#${t}</span>`).join('')}</div>
+          <button class="kbd" onclick="openEmployee(${e.id})">Подробнее</button>
+        `;
+        grid.appendChild(card);
+      });
+
+      const pages = Math.max(1, Math.ceil(filtered.length/PAGE_SIZE));
+      document.getElementById('pageLabel').textContent = `${page} / ${pages}`;
+      document.getElementById('empStat').textContent = `Показано ${slice.length} из ${filtered.length}`;
+    }
+
+    function openEmployee(id){
+      const e = EMPLOYEES.find(x=>x.id===id);
+      const modal = document.createElement('div');
+      modal.className='modal open';
+      modal.innerHTML = `
+        <div class="modal-card" role="dialog" aria-label="Анкета сотрудника">
+          <div class="modal-head">
+            <strong>${e.name}</strong>
+            <button class="close" aria-label="Закрыть" onclick="this.closest('.modal').remove()">×</button>
+          </div>
+          <div class="modal-body">
+            <div class="grid grid-2">
+              <div>
+                <img src="${e.photo}" alt="${e.name}" style="width:100%; border-radius:10px" />
+                <p class="muted" style="margin-top:8px">№ удостоверения: ${e.idNumber}</p>
+              </div>
+              <div>
+                <p><strong>Должность:</strong> ${e.position}</p>
+                <p><strong>Подразделение:</strong> ${e.dept}</p>
+                <p><strong>E‑mail:</strong> <a class="link" href="mailto:${e.email}">${e.email}</a></p>
+                <p><strong>Телефон:</strong> <a class="link" href="tel:${e.phone.replace(/\D/g,'')}">${e.phone}</a></p>
+                <p><strong>Дата рождения:</strong> ${e.birth}</p>
+                <div style="margin-top:8px">Теги: ${e.tags.map(t=>`<span class='chip'>${t}</span>`).join(' ')}</div>
+              </div>
+            </div>
+            <hr style="margin:16px 0; border:none; border-top:1px solid #eef2f7" />
+            <h4>Пример «дела» (демо)</h4>
+            <table>
+              <tr><th>№</th><th>Тип инцидента</th><th>Статус</th><th>Комментарий</th></tr>
+              <tr><td>27‑${id}‑01</td><td>Подмена номера</td><td>Закрыто</td><td>Блок‑лист обновлён</td></tr>
+              <tr><td>27‑${id}‑02</td><td>Фишинг‑SMS</td><td>В работе</td><td>Информ‑рассылка гражданам</td></tr>
+            </table>
+          </div>
+        </div>`;
+      document.body.appendChild(modal);
+    }
+
+    // Фильтры / поиск / сортировка
+    const searchInput = document.getElementById('empSearch');
+    const sortSelect = document.getElementById('empSort');
+
+    function applyFilters(){
+      const q = (searchInput.value||'').toLowerCase();
+      const dept = deptSelect.value;
+      filtered = EMPLOYEES.filter(e=>{
+        const matchesQ = e.name.toLowerCase().includes(q) || e.position.toLowerCase().includes(q);
+        const matchesD = !dept || e.dept===dept;
+        return matchesQ && matchesD;
+      });
+      const sort = sortSelect.value;
+      filtered.sort((a,b)=>{
+        if(sort==='name') return a.name.localeCompare(b.name);
+        if(sort==='name_desc') return b.name.localeCompare(a.name);
+        if(sort==='dept') return a.dept.localeCompare(b.dept);
+        return 0;
+      });
+      page=1; renderEmployees();
+    }
+
+    document.getElementById('prevPage').addEventListener('click', ()=>{ if(page>1){ page--; renderEmployees(); } });
+    document.getElementById('nextPage').addEventListener('click', ()=>{
+      const pages = Math.max(1, Math.ceil(filtered.length/PAGE_SIZE));
+      if(page<pages){ page++; renderEmployees(); }
+    });
+    searchInput.addEventListener('input', applyFilters);
+    deptSelect.addEventListener('change', applyFilters);
+    sortSelect.addEventListener('change', applyFilters);
+
+    renderEmployees();
+
+    // =======================
+    // Документы — таблица демо
+    // =======================
+    const DOCS = [
+      { id:1, title:'Устав отделения №27', ver:'1.2', date:'2025‑06‑01', file:'docs/Устав_Отдел27.pdf' },
+      { id:2, title:'Регламент работы', ver:'1.4', date:'2025‑05‑15', file:'docs/Регламент_Работы.pdf' },
+      { id:3, title:'Положение о ПДн', ver:'1.1', date:'2025‑05‑20', file:'docs/Положение_ПД.pdf' },
+      { id:4, title:'Методика антифишинга', ver:'0.9‑draft', date:'2025‑07‑02', file:'docs/Антифишинг.pdf' }
+    ];
+    const docsTbody = document.querySelector('#docsTable tbody');
+    DOCS.forEach(d=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML = `<td>${d.id}</td><td>${d.title}</td><td>${d.ver}</td><td>${d.date}</td><td><a class='link' target='_blank' href='${d.file}'>PDF</a></td>`;
+      docsTbody.appendChild(tr);
+    });
+
+    // =======================
+    // Памятки — модалки
+    // =======================
+    function openMemo(id){ document.getElementById(id).classList.add('open'); }
+    function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+    window.openMemo = openMemo; window.closeModal = closeModal; window.openEmployee = openEmployee;
+
+    // =======================
+    // Фидбек — демо
+    // =======================
+    function sendFeedback(e){
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+      const out  = document.getElementById('feedbackResult');
+      out.textContent = `Спасибо! (демо) Тема: "${data.topic}". Сообщение принято локально.`;
+      form.reset();
+      return false;
+    }
+    window.sendFeedback = sendFeedback;
+  </script>
+</body>
+</html>

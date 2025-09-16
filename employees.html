@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Сотрудники отдела №27 Роскомнадзора</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'PT Sans', Arial, sans-serif;
+      background: #f6f9fc;
+      color: #222;
+      margin: 0;
+    }
+    header {
+      background: #0c3776;
+      color: #fff;
+      padding: 0;
+    }
+    .rkn-header-row {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 18px 20px 0;
+    }
+    .rkn-logo {
+      height: 68px;
+    }
+    .rkn-title {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.22;
+    }
+    nav {
+      background: #0c3776;
+    }
+    .main-menu {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      gap: 28px;
+      padding: 0 20px 0 112px;
+    }
+    .main-menu a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 18px 0 10px;
+      border-bottom: 2px solid transparent;
+      transition: border .2s;
+    }
+    .main-menu a:hover, .main-menu .active {
+      border-bottom: 2px solid #9bd540;
+    }
+
+    main {
+      padding: 0 0 50px 0;
+      min-height: 100vh;
+    }
+    .section-title {
+      margin: 54px 0 12px 0;
+      color: #0c3776;
+      text-align: center;
+      font-size: 2.4rem;
+    }
+    .employee-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 24px #001a3620;
+    }
+    .employee-search {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 38px;
+    }
+    .employee-search input {
+      padding: 13px 18px;
+      border-radius: 7px;
+      border: 1.5px solid #cad9ea;
+      font-size: 18px;
+      width: 360px;
+      background: #f7faff;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .employee-search input:focus {
+      border-color: #0c3776;
+      background: #fff;
+    }
+    .employee-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 34px;
+      justify-items: center;
+      align-items: stretch;
+    }
+    .employee-card {
+      background: #f9fbff;
+      border-radius: 12px;
+      box-shadow: 0 2px 14px #0c377620;
+      padding: 34px 26px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s, transform 0.18s;
+      min-width: 240px;
+      max-width: 320px;
+    }
+    .employee-card:hover {
+      box-shadow: 0 8px 28px #0c377640;
+      transform: translateY(-3px) scale(1.03);
+    }
+    .employee-photo {
+      width: 110px;
+      height: 145px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 1px 5px #19377620;
+      margin-bottom: 18px;
+      background: #e7f1fa;
+      border: 2px solid #d3e0f3;
+    }
+    .employee-name {
+      color: #0c3776;
+      font-size: 1.16rem;
+      font-weight: 600;
+      margin-bottom: 7px;
+      text-align: center;
+    }
+    .employee-position {
+      color: #2c3954;
+      font-size: 1.03rem;
+      margin-bottom: 1px;
+      text-align: center;
+    }
+    .employee-dept {
+      color: #5a6c8a;
+      font-size: 0.99rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .employee-more-btn {
+      margin-top: 13px;
+      padding: 10px 32px;
+      background: #fff;
+      color: #0c3776;
+      border: 2px solid #0c3776;
+      border-radius: 8px;
+      font-size: 1.07rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .employee-more-btn:hover {
+      background: #0c3776;
+      color: #fff;
+    }
+
+    /* Модалка */
+    .employee-modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(24,48,89,.33);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      transition: background .2s;
+    }
+    .employee-modal-bg.open { display: flex; }
+    .employee-modal {
+      background: #fff;
+      border-radius: 13px;
+      box-shadow: 0 8px 48px #001a3640;
+      max-width: 650px;
+      width: 95vw;
+      padding: 0 0 25px 0;
+      position: relative;
+      animation: modalIn .17s cubic-bezier(.6,.2,.1,1.02);
+    }
+    @keyframes modalIn { from { transform: translateY(30px) scale(.98); opacity:.5;} to { transform: none; opacity:1;} }
+    .employee-modal-header {
+      padding: 24px 32px 7px 32px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-radius: 13px 13px 0 0;
+      background: #f6f9fc;
+      border-bottom: 1px solid #e6ebf7;
+    }
+    .employee-modal-title {
+      color: #0c3776;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .employee-modal-close {
+      background: none;
+      border: none;
+      font-size: 2.1rem;
+      color: #99a9ca;
+      cursor: pointer;
+      line-height: 1;
+      margin-left: 18px;
+      margin-top: -6px;
+      transition: color .15s;
+    }
+    .employee-modal-close:hover { color: #0c3776; }
+    .employee-modal-content {
+      padding: 20px 32px 0 32px;
+    }
+    .employee-modal-content strong {
+      color: #0c3776;
+    }
+    .employee-modal-content p {
+      margin: 7px 0 6px 0;
+      font-size: 1.03rem;
+      color: #324061;
+    }
+    .employee-modal-idimg {
+      width: 100%;
+      max-width: 470px;
+      margin: 32px auto 16px auto;
+      display: block;
+      border-radius: 10px;
+      box-shadow: 0 2px 14px #23478130;
+      border: 2px solid #e7f3ff;
+    }
+    .case-link-btn {
+      display: inline-block;
+      padding: 10px 26px;
+      background: #0c3776;
+      color: #fff;
+      border-radius: 7px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .17s;
+      margin-bottom: 10px;
+      margin-top: 8px;
+    }
+    .case-link-btn:hover {
+      background: #234781;
+    }
+
+    @media (max-width: 700px) {
+      .employee-modal-header, .employee-modal-content { padding: 16px 7vw 0 7vw; }
+      .employee-modal-content { padding-bottom: 0;}
+      .employee-modal { padding-bottom: 12px;}
+      .employee-card { padding: 25px 7vw 17px 7vw; }
+    }
+    @media (max-width: 900px) {
+      .employee-section { padding: 10vw 3vw; }
+      .section-title { font-size: 1.5rem;}
+      .employee-list { gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="rkn-header-row">
+    <img src="images/rkn-logo.png" alt="Герб" class="rkn-logo">
+    <div class="rkn-title">
+      ОТДЕЛ №27 ФЕДЕРАЛЬНОЙ СЛУЖБЫ ПО НАДЗОРУ В СФЕРЕ СВЯЗИ,<br>ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И МАССОВЫХ КОММУНИКАЦИЙ
+    </div>
+  </div>
+  <nav>
+    <div class="main-menu">
+      <a href="index.html">Главная</a>
+      <a href="personal.html">Персональные данные</a>
+      <a href="communication.html">Связь</a>
+      <a href="media.html">СМИ</a>
+      <a href="advertising.html">Интернет-реклама</a>
+      <a href="employees.html" class="active">Сотрудники</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <h1 class="section-title">Сотрудники отдела №27</h1>
+  <section class="employee-section">
+    <div class="employee-search">
+      <input type="text" id="emp-search" placeholder="Поиск по ФИО" oninput="filterEmployees()">
+    </div>
+    <div class="employee-list" id="employee-list"></div>
+  </section>
+</main>
+
+<!-- Модальное окно -->
+<div class="employee-modal-bg" id="emp-modal-bg" onclick="closeEmpModal(event)">
+  <div class="employee-modal" id="emp-modal" onclick="event.stopPropagation()">
+    <div class="employee-modal-header">
+      <div>
+        <span class="employee-modal-title" id="modalName"></span>
+      </div>
+      <button class="employee-modal-close" onclick="closeEmpModal()">&times;</button>
+    </div>
+    <div class="employee-modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="#">Публичная декларация</a>
+    <a href="#">Поддержка сайта</a>
+    <a href="#">Карта сайта</a>
+  </div>
+  <div>© 2025 Отдел №27 Федеральной службы по надзору в сфере связи, информационных технологий и массовых коммуникаций</div>
+  <div>Контакты: hotline27@rkn.gov.ru</div>
+</footer>
+<script>
+const EMPLOYEES = [
+  {
+    name: "Фролова Александра",
+    position: "Ведущий специалист-эксперт",
+    dept: "Отдел экстренной цифровой поддержки",
+    email: "frolova.alexsandra94@gov.ru",
+    phone: "+7(927)071-17-72",
+    birth: "15.04.1994",
+    idnum: "142-217",
+    responsibilities: "Передает аналитические отчёты в другие подразделения, Консультирует по безопасной повторной авторизации",
+    photo: "images/1.jpg",
+    idimg: "images/1_id.jpg",
+    caseUrl: "cases/1_case.pdf"
+  },
+  {
+    name: "Кузнецов Виктор",
+    position: "Специалист по защите персональных данных",
+    dept: "Защита граждан от цифрового мошенничества",
+    email: "kuznetcov21victor@gov.ru",
+    phone: "+7(933)025-30-59",
+    birth: "22.09.1991",
+    idnum: "582-749",
+    responsibilities: "Подтверждает подлинность личности граждан после компрометации, Организует техническое восстановление данных",
+    photo: "images/2.jpg",
+    idimg: "images/2_id.jpg",
+    caseUrl: "cases/2_case.pdf"
+  },
+  {
+    name: "Попова Диана",
+    position: "Специалист по кибербезопасности в социальных сетях",
+    dept: "Отдел персональной цифровой безопасности",
+    email: "popova.diana28@gov.ru",
+    phone: "+7(995)076-70-02",
+    birth: "03.12.1995",
+    idnum: "192-004",
+    responsibilities: "Сопровождает процесс смены паролей и настройки двухфакторной аутентификации, Протоколы шифрования",
+    photo: "images/3.jpg",
+    idimg: "images/3_id.jpg",
+    caseUrl: "cases/3_case.pdf"
+  },
+  {
+    name: "Зотова Наталья",
+    position: "Специалист экстренного реагирования на мошеннические звонки",
+    dept: "Отдел по защите от телефонного мошенничества",
+    email: "zotovanatalya70rkn@gov.ru",
+    phone: "+7(951)853-79-67",
+    birth: "17.08.1994",
+    idnum: "453-513",
+    responsibilities: "Анализирует инциденты, связанные с обманом по телефону, Консультирует пострадавших",
+    photo: "images/4.jpg",
+    idimg: "images/4_id.jpg",
+    caseUrl: "cases/4_case.pdf"
+  },
+  {
+    name: "Панфилова Александра",
+    position: "Специалист по противодействию мошенническим звонкам",
+    dept: "Отдел защиты от телефонного и онлайн-мошенничества",
+    email: "ponomareva95natalya.rkn@gov.ru",
+    phone: "+7(901)623-88-92",
+    birth: "27.02.1996",
+    idnum: "240-325",
+    responsibilities: "Ведет дела по утрате доступа к данным, Содействует безопасной переидентификации",
+    photo: "images/5.jpg",
+    idimg: "images/5_id.jpg",
+    caseUrl: "cases/5_case.pdf"
+  },
+  {
+    name: "Никифоров Николай",
+    position: "Управление по мониторингу мошеннических вызовов",
+    dept: "Группа мониторинга мошеннической активности в телеком-среде",
+    email: "nikiforov.nikolay93@gov.ru",
+    phone: "+7(916)843-32-56",
+    birth: "11.11.1993",
+    idnum: "245-420",
+    responsibilities: "Ведёт дела, связанные с утратой доступа к государственным сервисам после мошеннических звонков, Содействует безопасной повторной идентификации граждан в случае взлома учётной записи, Обеспечивает оперативную блокировку каналов мошеннической телефонной активности",
+    photo: "images/6.jpg",
+    idimg: "images/6_id.jpg",
+    caseUrl: "cases/6_case.pdf"
+  },
+  {
+    name: "Стрельникова Анна",
+    position: "Эксперт по противодействию телефонному мошенничеству",
+    dept: "Отдел противодействия телефонному мошенничеству",
+    email: "anna.nikolaevna10roscom@gov.ru",
+    phone: "+7(961)153-49-56",
+    birth: "07.11.1995",
+    idnum: "301-018",
+    responsibilities: "Мониторинг и анализ телеком-активности, Взаимодействие с операторами связи и правоохранительными органами, Приём и обработка обращений граждан",
+    photo: "images/7.jpg",
+    idimg: "images/7_id.jpg",
+    caseUrl: "cases/7_case.pdf"
+  }
+  // Добавь остальных сотрудников по аналогии, если появятся!
+];
+
+function renderEmployees(filter = '') {
+  const list = document.getElementById('employee-list');
+  list.innerHTML = '';
+  EMPLOYEES.filter(e => e.name.toLowerCase().includes(filter.toLowerCase()))
+    .forEach((e, idx) => {
+      const card = document.createElement('div');
+      card.className = 'employee-card';
+      card.innerHTML = `
+        <img src="${e.photo}" alt="${e.name}" class="employee-photo">
+        <div class="employee-name">${e.name}</div>
+        <div class="employee-position">${e.position}</div>
+        <div class="employee-dept">${e.dept}</div>
+        <button class="employee-more-btn" onclick="showEmpModal(${idx})">Подробнее</button>
+      `;
+      list.appendChild(card);
+    });
+}
+renderEmployees();
+
+function filterEmployees() {
+  const val = document.getElementById('emp-search').value.trim();
+  renderEmployees(val);
+}
+
+window.showEmpModal = function(idx) {
+  const e = EMPLOYEES[idx];
+  document.getElementById('emp-modal-bg').classList.add('open');
+  document.getElementById('modalName').textContent = e.name;
+  document.getElementById('modalContent').innerHTML = `
+    <p><strong>Должность:</strong> ${e.position}</p>
+    <p><strong>Подразделение:</strong> ${e.dept}</p>
+    <p><strong>Email:</strong> ${e.email}</p>
+    <p><strong>Телефон:</strong> ${e.phone}</p>
+    <p><strong>Дата рождения:</strong> ${e.birth}</p>
+    <p><strong>№ удостоверения:</strong> ${e.idnum}</p>
+    <p><strong>Обязанности:</strong> ${e.responsibilities}</p>
+    <img src="${e.idimg}" alt="Удостоверение" class="employee-modal-idimg">
+    <a class="case-link-btn" href="${e.caseUrl}" target="_blank">Просмотреть дело сотрудника</a>
+  `;
+};
+window.closeEmpModal = function(e) {
+  document.getElementById('emp-modal-bg').classList.remove('open');
+}
+</script>
+</body>
+</html>
